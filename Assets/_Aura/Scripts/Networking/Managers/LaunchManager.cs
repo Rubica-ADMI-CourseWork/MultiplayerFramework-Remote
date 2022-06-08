@@ -18,6 +18,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     #region Monobehaviour Callbacks
     private void Awake()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         InitRoomOptions();
     }
     private void Start()
@@ -49,6 +50,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log(PhotonNetwork.NickName + " joined Room " + PhotonNetwork.CurrentRoom.Name);
+        PhotonNetwork.LoadLevel(1);
     }
 
     //called when remote player enters the room we are in

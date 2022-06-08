@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Aura/Scenes/LobbyRoomJoin.unity
     guid: c89f4e9756cb01d4da067f54aa05be88
+  - enabled: 1
+    path: Assets/_Aura/Scenes/GameScene.unity
+    guid: 85707d59c120c284384ae4c1cb069525
   m_configObjects: {}
