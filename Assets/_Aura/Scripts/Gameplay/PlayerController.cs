@@ -16,14 +16,16 @@ public class PlayerController : MonoBehaviour
     [Header("Look related fields.")]
     [SerializeField] float LookSensitivity;
     [SerializeField] Transform playerHead;
+    [SerializeField] Transform eyePosition;
     [SerializeField] float minHeadRot;
     [SerializeField] float maxHeadRot;
+    Camera playerEyes;
 
     [Header("Move related fields")]
     [SerializeField] float moveSpeed;
 
     //cache of movement direction aquired from keyboard input
-    Vector3 moveDirection,moveDirectionLocal;
+    Vector3 moveDirection, moveDirectionLocal;
     //reference to character controller component on the Player Gameobject
     CharacterController characterController;
 
@@ -41,6 +43,11 @@ public class PlayerController : MonoBehaviour
     //seperate cache of input in the Y axis coming from the mouse
     float headRotValue;
 
+    private void Awake()
+    {
+        characterController = GetComponent<CharacterController>();
+        playerEyes = Camera.main;
+    }
     private void Start()
     {
         //listen for input from joystick to control look functionality
@@ -50,35 +57,53 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        switch (controlOption) 
+        switch (controlOption)
         {
             case ControlMode.KeyboardMouse:
                 break;
-
+            case ControlMode.Joystick:
+                break;
         }
 
         //get input from mouse
         rotationInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * LookSensitivity;
 
         //LookWithJoystick();
-       
+
         LookSideways();
         LookUpDown();
 
         //get input from Keyboard and cache it in the moveDirection variable.
-        float xValue = Input.GetAxisRaw("Horizontal") * moveSpeed;
-        float zValue = Input.GetAxisRaw("Vertical") * moveSpeed;
+        float xValue = Input.GetAxisRaw("Horizontal") ;
+        float zValue = Input.GetAxisRaw("Vertical") ;
 
-        moveDirection = new Vector3(xValue,0f,zValue);
+        moveDirection = new Vector3(xValue, 0f, zValue);
 
-        //transform the vector to work in local space
-        moveDirectionLocal = (transform.forward * moveDirection.z)+(transform.right * moveDirection.x);
-        
+
+        float downVelocity = moveDirectionLocal.y;
+
+        //transform the vector to work in local space and normalize it
+        moveDirectionLocal = ((transform.forward * moveDirection.z) + (transform.right * moveDirection.x)).normalized * moveSpeed;
+        moveDirectionLocal.y = downVelocity;
+
+      
+        moveDirectionLocal.y += Physics.gravity.y * Time.deltaTime;
+        Debug.Log(downVelocity + " After applying gravit");
+        if (characterController.isGrounded)
+        {
+            moveDirectionLocal.y = 0f;
+        }
+
+
         //add this input to the position of the game object every frame
-        transform.position += moveDirectionLocal * Time.deltaTime;
+        characterController.Move( moveDirectionLocal * Time.deltaTime);
     }
 
-
+    private void LateUpdate()
+    {
+        playerEyes.transform.position = eyePosition.position;
+        playerEyes.transform.rotation = eyePosition.rotation;
+    }
     private void LookUpDown()
     {
         //look up and down
