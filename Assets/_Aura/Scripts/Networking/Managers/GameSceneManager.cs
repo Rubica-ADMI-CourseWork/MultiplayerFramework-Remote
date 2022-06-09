@@ -6,9 +6,9 @@ using Photon.Realtime;
 using TMPro;
 public class GameSceneManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField]TMP_Text debugText;
+    [SerializeField] TMP_Text debugText;
     //will run when master client joins room
-   
+
     public override void OnJoinedRoom()
     {
         debugText.text = PhotonNetwork.NickName + " joined GameScene!";

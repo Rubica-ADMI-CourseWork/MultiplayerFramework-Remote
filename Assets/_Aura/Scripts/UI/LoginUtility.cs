@@ -22,6 +22,6 @@ public class LoginUtility : MonoBehaviour
             name = nameInput.text;
         }
 
-        FindObjectOfType<LaunchManager>().ConnectToServerWithName(name);
+        //FindObjectOfType<LaunchManager>().ConnectToServerWithName(name);
     }
 }

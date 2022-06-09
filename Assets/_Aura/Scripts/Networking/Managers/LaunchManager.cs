@@ -24,7 +24,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         LobbyPanel.SetActive(false);
-    } 
+    }
 
     #endregion
 
@@ -38,7 +38,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     {
         Debug.Log(PhotonNetwork.NickName + " Connected to Photon Servers.");
         LobbyPanel.SetActive(true);
-        LoginPanel.SetActive(false);    
+        LoginPanel.SetActive(false);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -56,7 +56,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     //called when remote player enters the room we are in
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log(newPlayer.NickName + " joined Room " + PhotonNetwork.CurrentRoom.Name + " "+PhotonNetwork.CurrentRoom.PlayerCount);
+        Debug.Log(newPlayer.NickName + " joined Room " + PhotonNetwork.CurrentRoom.Name + " " + PhotonNetwork.CurrentRoom.PlayerCount);
     }
 
     #endregion

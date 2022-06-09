@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+       
         playerEyes = Camera.main;
     }
     private void Start()
@@ -78,26 +79,23 @@ public class PlayerController : MonoBehaviour
         float zValue = Input.GetAxisRaw("Vertical") ;
 
         moveDirection = new Vector3(xValue, 0f, zValue);
-
-
-        float downVelocity = moveDirectionLocal.y;
-
+       
         //transform the vector to work in local space and normalize it
         moveDirectionLocal = ((transform.forward * moveDirection.z) + (transform.right * moveDirection.x)).normalized * moveSpeed;
-        moveDirectionLocal.y = downVelocity;
-
-      
+        
+        //apply gravity in the Y axis.
         moveDirectionLocal.y += Physics.gravity.y * Time.deltaTime;
-        Debug.Log(downVelocity + " After applying gravit");
+      
         if (characterController.isGrounded)
         {
-            moveDirectionLocal.y = 0f;
+            moveDirection.y = 0f;
         }
-
-
+        
+        
         //add this input to the position of the game object every frame
         characterController.Move( moveDirectionLocal * Time.deltaTime);
     }
+
 
     private void LateUpdate()
     {
