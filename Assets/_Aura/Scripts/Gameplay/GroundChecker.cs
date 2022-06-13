@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class GroundChecker : MonoBehaviour
 {
-    [SerializeField] PlayerController playerController;
+    [SerializeField] FPSLookMove playerController;
     [SerializeField] float rayCastDistance = 1f;
     [SerializeField] LayerMask ground;
     private void Update()

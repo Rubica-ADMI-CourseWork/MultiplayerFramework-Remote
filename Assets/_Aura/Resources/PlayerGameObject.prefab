@@ -309,12 +309,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8145867868501442693}
   - component: {fileID: 8145867868501442696}
-  - component: {fileID: 8145867868501442692}
   - component: {fileID: 8145867868501442697}
   - component: {fileID: 8425576312583553995}
   - component: {fileID: 705446957466970909}
   - component: {fileID: -5776989715693877165}
   - component: {fileID: -3483355505313846429}
+  - component: {fileID: 7660673078406356071}
+  - component: {fileID: 1091962201}
   m_Layer: 0
   m_Name: PlayerGameObject
   m_TagString: Untagged
@@ -356,25 +357,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.07, z: 0}
---- !u!114 &8145867868501442692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8145867868501442695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a78789f1249f151478c432600d64882e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controlOption: 0
-  LookSensitivity: 2
-  playerHead: {fileID: 8145867866827307040}
-  eyePosition: {fileID: 8145867867153566763}
-  minHeadRot: -50
-  maxHeadRot: 50
-  moveSpeed: 10
 --- !u!54 &8145867868501442697
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -412,7 +394,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: -5776989715693877165}
   - {fileID: -3483355505313846429}
-  sceneViewId: 0
+  sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &705446957466970909
@@ -460,6 +442,44 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &7660673078406356071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145867868501442695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1edd3f0a1c93b2b41806b139dcc3d942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  eyePosition: {fileID: 8145867867153566763}
+  lookSideWaysSensitivity: 20
+  lookSensitivityMultiplier: 5
+  lookUpDownSensitivity: 20
+  maxLookUp: -45
+  maxLookDown: 45
+  jumpForce: 20
+  gravityModifier: 4
+--- !u!114 &1091962201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145867868501442695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f5290c40de6f847bcb665c2147b2ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 7660673078406356071}
+  rayCastDistance: 1
+  ground:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &8896190776568591791
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,7 +524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f5290c40de6f847bcb665c2147b2ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 8145867868501442692}
+  playerController: {fileID: 0}
   rayCastDistance: 0.14
   ground:
     serializedVersion: 2
