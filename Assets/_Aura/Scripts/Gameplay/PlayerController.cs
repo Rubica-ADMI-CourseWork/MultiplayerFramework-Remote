@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform eyePosition;
     [SerializeField] float minHeadRot;
     [SerializeField] float maxHeadRot;
-    Camera playerEyes;
+    Transform playerEyes;
 
     [Header("Move related fields")]
     [SerializeField] float moveSpeed;
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     //Joystick input related Code
     [Header("Reference to Look Joystick")]
-    [SerializeField] LookJoystickController lookJoystick;
+    LookJoystickController lookJoystick;
     bool isLookingUp;
     bool isLookingDown;
     bool isTurning;
@@ -43,11 +43,14 @@ public class PlayerController : MonoBehaviour
     //seperate cache of input in the Y axis coming from the mouse
     float headRotValue;
 
+    public bool IsGrounded { get; private set; }
+
     private void Awake()
     {
+        lookJoystick = FindObjectOfType<LookJoystickController>();
         characterController = GetComponent<CharacterController>();
        
-        playerEyes = Camera.main;
+        //playerEyes = transform.Find("Eyes");
     }
     private void Start()
     {
@@ -80,27 +83,31 @@ public class PlayerController : MonoBehaviour
 
         moveDirection = new Vector3(xValue, 0f, zValue);
        
-        //transform the vector to work in local space and normalize it
+        float yVel = moveDirectionLocal.y;
         moveDirectionLocal = ((transform.forward * moveDirection.z) + (transform.right * moveDirection.x)).normalized * moveSpeed;
-        
-        //apply gravity in the Y axis.
-        moveDirectionLocal.y += Physics.gravity.y * Time.deltaTime;
+        moveDirectionLocal.y = yVel;
       
-        if (characterController.isGrounded)
+      
+        if (IsGrounded)
         {
-            moveDirection.y = 0f;
+            Debug.Log("Grounded!");
+            moveDirectionLocal.y = 0f;
         }
-        
+         
+        moveDirectionLocal.y += Physics.gravity.y * Time.deltaTime;
         
         //add this input to the position of the game object every frame
         characterController.Move( moveDirectionLocal * Time.deltaTime);
     }
 
-
+    public void SetIsGrounded(bool trueFalse)
+    {
+        IsGrounded = trueFalse;
+    }
     private void LateUpdate()
     {
-        playerEyes.transform.position = eyePosition.position;
-        playerEyes.transform.rotation = eyePosition.rotation;
+        //playerEyes.position = eyePosition.position;
+        //playerEyes.rotation = eyePosition.rotation;
     }
     private void LookUpDown()
     {
